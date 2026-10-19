@@ -11,6 +11,7 @@ from discord.ext import commands
 from dotenv import load_dotenv
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
+from spotify_account import SpotifyAccountCog
 
 load_dotenv()
 logging.basicConfig(level=logging.INFO)
@@ -35,6 +36,11 @@ spotify = spotipy.Spotify(
 
 intents = discord.Intents.default()
 bot = commands.Bot(command_prefix="!", intents=intents)
+
+
+@bot.event
+async def setup_hook():
+    await bot.add_cog(SpotifyAccountCog(bot))
 
 @dataclass
 class Track:
